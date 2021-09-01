@@ -30,12 +30,22 @@
   font-weight: 700;
   color: white;
 }
+.logo-main-tab {
+  position: absolute;
+  left: 150px;
+  top: 12px;
+  font-size: 30px;
+}
 
 .logout-tab {
   position: absolute;
   top: 22px;
   right: 22px;
   color: white;
+  border-radius: 20px;
+  border: 3px solid salmon;
+  padding: 5px;
+  background-color: slateblue;
   cursor: pointer;
 }
 

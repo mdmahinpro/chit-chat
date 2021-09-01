@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { ChatEngine } from 'react-chat-engine'
 import { useHistory } from 'react-router-dom'
+import chitchat from '../chit chat.png'
 import { useAuth } from '../context/AuthContext'
 import { auth } from './firebase'
 
@@ -10,14 +11,13 @@ function Chat() {
     const {user}=useAuth()
     const [loading, setLoading] = useState(true)
 
-    console.log(user);
+    console.log(process.env.PRIVATE_KEY);
 
     const handleLogout=async ()=>{
         await auth.signOut()
         history.push('/')
     }
 
-    console.log(user);
 
     const getFile=async(url)=>{
         const response=await fetch(url)
@@ -32,7 +32,7 @@ function Chat() {
         }
         axios.get('https://api.chatengine.io/users/me',{
             headers:{
-                'project-id':process.env.PROJECT_ID,
+                'project-id':process.env.REACT_APP_PROJECT_ID,
                 'user-name':user.email,
                 'user-secret':user.uid
             }
@@ -53,7 +53,7 @@ function Chat() {
                 axios.post('https://api.chatengine.io/users/',
                 formData,
                 {
-                    headers:{'private-key':process.env.PrivateKey}
+                    headers:{'private-key':process.env.REACT_APP_PRIVATE_KEY}
                 }
                 )
                 .then(()=>setLoading(false))
@@ -67,8 +67,12 @@ function Chat() {
     return (
         <div className='chats-pages'>
             <div className="nav-bar">
+                
                 <div className="logo-tab">
                     Chit Chat
+                </div>
+                <div className="logo-main-tab">
+                <img src={chitchat} width="100px" alt="" />
                 </div>
                 <div onClick={handleLogout} className="logout-tab">
                     Logout
@@ -76,7 +80,7 @@ function Chat() {
             </div>
             <ChatEngine
             height="calc(100vh-66px"
-            projectID={process.env.PROJECT_ID}
+            projectID={process.env.REACT_APP_PROJECT_ID}
             userName={user.email}
             userSecret={user.uid}
             />
